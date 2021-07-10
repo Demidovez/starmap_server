@@ -1,0 +1,57 @@
+use('starmap');
+
+db.templates.insertMany([
+  
+  {
+    "name": "classic",
+    "title": "Классика",
+    "isActive": true,
+    "order": 1,
+    "image": "/images/templates/classic.jpeg"
+  },
+  {
+    "name": "half",
+    "title": "Полусфера",
+    "isActive": true,
+    "order": 2,
+    "image": "/images/templates/half.jpeg"
+  },
+  {
+    "name": "polaroid",
+    "title": "Полароид",
+    "isActive": true,
+    "order": 3,
+    "image": "/images/templates/polaroid.jpeg"
+  },
+  {
+    "name": "full",
+    "title": "Полная",
+    "isActive": true,
+    "order": 4,
+    "image": "/images/templates/full.jpeg"
+  },
+  {
+    "name": "starworld",
+    "title": "Звездный мир",
+    "isActive": true,
+    "order": 5,
+    "image": "/images/templates/starworld.jpeg"
+  },
+  {
+
+    "name": "milkyway",
+    "title": "Млечный путь",
+    "isActive": true,
+    "order": 6,
+    "image": "/images/templates/milkyway.jpeg"
+  },
+  {
+    "name": "moon",
+    "title": "Луна",
+    "isActive": true,
+    "order": 7,
+    "image": "/images/templates/moon.png"
+  }
+
+]);
+

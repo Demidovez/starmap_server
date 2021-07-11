@@ -6,13 +6,15 @@ import {
 } from "./helpers/index.js";
 const app = express();
 import mongoose from "mongoose";
-import createStarMap from "./starmap/index.js";
+import { createStarMap, editStarMap } from "./starmap/index.js";
 
 // Соединение с БД
 mongoose.connect("mongodb://62.75.195.219:28018/starmap", {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 });
+
+var domStarMap = createStarMap();
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -45,15 +47,20 @@ app.get("/images/:category/:name", (req, res) => {
 });
 
 // Создаем звездную карту
-app.post("/get_star_map", async (req, res) => {
+app.post("/get_classic_v1_map", async (req, res) => {
   const latitude = req.body.latitude;
   const longitude = req.body.longitude;
 
-  const svgPromise = createStarMap();
+  var options = {
+    rotate: { center: [52.1649, 29.1333, 0] },
+    config: {
+      background: { fill: "#000000" },
+    },
+  };
 
   res.setHeader("Content-Type", "image/svg+xml");
 
-  svgPromise.then((data) => res.send(data));
+  editStarMap(domStarMap, options).then((data) => res.send(data));
 });
 
 app.listen(3000, () => {

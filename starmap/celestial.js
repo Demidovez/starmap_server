@@ -8391,7 +8391,7 @@
             .attr("d", function (d) {
               var r = has(cfg.planets.symbols[d.id], "size")
                 ? (cfg.planets.symbols[d.id].size - 1) * adapt
-                : null;
+                : d.properties.mag * adapt;
               return planetSymbol(d.properties, r);
             })
             .attr("class", function (d) {

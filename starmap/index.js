@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 const { JSDOM } = jsdom;
 import htmlDom from "./dom.js";
 
-export default function createStarMap() {
+export function createStarMap() {
   const dom = new JSDOM(htmlDom, {
     url: "file://" + path.dirname(fileURLToPath(import.meta.url)) + "/", // "file:///Users/demi/Projects/starmap_server/starmap_server/starmap/",
     runScripts: "dangerously",
@@ -19,7 +19,7 @@ export default function createStarMap() {
     transform: "equatorial", // Coordinate transformation: equatorial (default), ecliptic, galactic, supergalactic
     center: null, // Initial center coordinates in set transform [longitude, latitude, orientation] all in degrees null = default center [0,0,0]
     orientationfixed: true, // Keep orientation angle the same as center[2]
-    geopos: [52.1649, 29.1333], // optional initial geographic position [lat,lon] in degrees,overrides center
+    geopos: null, // optional initial geographic position [lat,lon] in degrees,overrides center
     follow: "zenith", // on which coordinates to center the map, default: zenith, if location enabled, otherwise center
     zoomlevel: null, // initial zoom level 0...zoomextend; 0|null = default, 1 = 100%, 0 < x <= zoomextend
     zoomextend: 10, // maximum zoom level
@@ -40,7 +40,7 @@ export default function createStarMap() {
     advanced: true, // Display fewer form fields if false
     daterange: [], // Calender date range; null: displaydate-+10; [n<100]: displaydate-+n; [yr]: yr-+10;[yr, n<100]: [yr-n, yr+n]; [yr0, yr1]
     controls: true, // Display zoom controls
-    lang: "ru", // Global language override for names, any name setting that has the chosen language available
+    lang: "", // Global language override for names, any name setting that has the chosen language available
     // Default: desig or empty string for designations, other languages as used anywhere else
     culture: "", // Source of constellations and star names, default "iau", other: "cn" Traditional Chinese
     container: "map", // ID of parent element, e.g. div, null = html-body
@@ -159,11 +159,11 @@ export default function createStarMap() {
       // Font styles for planetary symbols
       symbols: {
         // Character and color for each symbol in 'which' above (simple circle: \u25cf), optional size override for Sun & Moon
-        sol: { symbol: "\u2609", letter: "Su", fill: "#ffff00", size: "" },
+        sol: { symbol: "\u2609", letter: "Su", fill: "#ffff00" },
         mer: { symbol: "\u263f", letter: "Me", fill: "#cccccc" },
         ven: { symbol: "\u2640", letter: "V", fill: "#eeeecc" },
         ter: { symbol: "\u2295", letter: "T", fill: "#00ccff" },
-        lun: { symbol: "\u25cf", letter: "L", fill: "#ffffff", size: "" }, // overridden by generated crecent, except letter & size
+        lun: { symbol: "\u25cf", letter: "L", fill: "#ffffff" }, // overridden by generated crecent, except letter & size
         mar: { symbol: "\u2642", letter: "Ma", fill: "#ff6600" },
         cer: { symbol: "\u26b3", letter: "C", fill: "#cccccc" },
         ves: { symbol: "\u26b6", letter: "Ma", fill: "#cccccc" },
@@ -180,7 +180,7 @@ export default function createStarMap() {
         align: "center",
         baseline: "middle",
       },
-      symbolType: "symbol", // Type of planet symbol: 'symbol' graphic planet sign, 'disk' filled circle scaled by magnitude
+      symbolType: "disk", // Type of planet symbol: 'symbol' graphic planet sign, 'disk' filled circle scaled by magnitude
       // 'letter': 1 or 2 letters S Me V L Ma J S U N
       names: false, // Show name in nameType language next to symbol
       nameStyle: {
@@ -285,15 +285,31 @@ export default function createStarMap() {
     },
   });
 
+  return dom;
+}
+
+export function editStarMap(dom, options) {
+  const { rotate, config } = options;
+
   var promiseResolve;
 
   const promise = new Promise((resolve, _) => {
     promiseResolve = (svg) => resolve(svg);
   });
 
-  dom.window.onModulesLoaded = () => {
+  dom.window.initedStartMap = () => {
+    if (rotate) {
+      dom.window.rotateStarMap(rotate);
+    }
+
+    if (config) {
+      dom.window.reloadStarMap(config);
+    }
+
     dom.window.downloadSVG().then((svg) => promiseResolve(svg));
   };
+
+  dom.window.eval("window.initedStartMap()");
 
   return promise;
 }

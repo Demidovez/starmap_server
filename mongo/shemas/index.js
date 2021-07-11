@@ -1,18 +1,16 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-const templateScheme = new Schema({
-    name: String,
-    title: String,
-    isActive: Boolean,
-    order: Number,
-    image: String
+export const templateScheme = new Schema({
+  name: String,
+  title: String,
+  isActive: Boolean,
+  order: Number,
+  image: String,
 });
 
-const controllerScheme = new Schema({
-    name: String,
-    title: String,
-    image: String
+export const controllerScheme = new Schema({
+  name: String,
+  title: String,
+  image: String,
 });
-
-module.exports = {templateScheme, controllerScheme}

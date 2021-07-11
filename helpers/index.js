@@ -1,10 +1,10 @@
-const fs = require("fs");
-const mongoose = require("mongoose");
-const { templateScheme, controllerScheme } = require("../mongo/shemas");
+import fs from "fs";
+import mongoose from "mongoose";
+import { templateScheme, controllerScheme } from "../mongo/shemas/index.js";
 const Template = mongoose.model("Template", templateScheme);
 const Controller = mongoose.model("Controller", controllerScheme);
 
-const getImageFromAssets = (res, category, name) => {
+export function getImageFromAssets(res, category, name) {
   let directory_name = "assets/images/" + category + "/" + name;
 
   const filename = fs.existsSync(directory_name);
@@ -22,9 +22,9 @@ const getImageFromAssets = (res, category, name) => {
       res.end(content);
     }
   });
-};
+}
 
-const getAllTemplates = async () => {
+export async function getAllTemplates() {
   const templates = await Template.find({}, (err, templates) => {
     if (err) return [];
 
@@ -32,22 +32,26 @@ const getAllTemplates = async () => {
   }).lean();
 
   return templates;
-};
+}
 
-const getControllersByTemplate = async (template) => {
-  const templateFinded = await Template.findOne({name: template}, (err, templateOne) => {
-    if (err) return {};
+export async function getControllersByTemplate(template) {
+  const templateFinded = await Template.findOne(
+    { name: template },
+    (err, templateOne) => {
+      if (err) return {};
 
-    return templateOne;
-  }).lean();
+      return templateOne;
+    }
+  ).lean();
 
-  const controllers = await Controller.find({name: {$in: templateFinded.controllers}}, (err, controllers) => {
-    if (err) return [];
+  const controllers = await Controller.find(
+    { name: { $in: templateFinded.controllers } },
+    (err, controllers) => {
+      if (err) return [];
 
-    return controllers;
-  }).lean();
+      return controllers;
+    }
+  ).lean();
 
   return controllers;
-};
-
-module.exports = { getImageFromAssets, getAllTemplates, getControllersByTemplate };
+}

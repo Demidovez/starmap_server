@@ -1,13 +1,20 @@
-const express = require("express");
-const { getImageFromAssets, getAllTemplates, getControllersByTemplate } = require("./helpers");
+import express from "express";
+import {
+  getImageFromAssets,
+  getAllTemplates,
+  getControllersByTemplate,
+} from "./helpers/index.js";
 const app = express();
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import createStarMap from "./starmap/index.js";
 
 // Соединение с БД
-mongoose.connect("mongodb://localhost:28018/starmap", {
+mongoose.connect("mongodb://62.75.195.219:28018/starmap", {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 });
+
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.send("<h2>Привет Express</h2>");
@@ -35,6 +42,18 @@ app.get("/images/:category/:name", (req, res) => {
   const name = req.params.name;
 
   getImageFromAssets(res, category, name);
+});
+
+// Создаем звездную карту
+app.post("/get_star_map", async (req, res) => {
+  const latitude = req.body.latitude;
+  const longitude = req.body.longitude;
+
+  const svgPromise = createStarMap();
+
+  res.setHeader("Content-Type", "image/svg+xml");
+
+  svgPromise.then((data) => res.send(data));
 });
 
 app.listen(3000, () => {

@@ -48,19 +48,22 @@ app.get("/images/:category/:name", (req, res) => {
 
 // Создаем звездную карту
 app.post("/get_classic_v1_map", async (req, res) => {
-  const latitude = req.body.latitude;
-  const longitude = req.body.longitude;
+  const background = req.body.background;
 
-  var options = {
-    rotate: { center: [52.1649, 29.1333, 0] },
-    config: {
-      background: { fill: "#000000" },
-    },
-  };
+  var options = {};
 
-  res.setHeader("Content-Type", "image/svg+xml");
+  if (background) {
+    options = {
+      rotate: { center: [52.1649, 29.1333, 0] },
+      config: {
+        background: { fill: background },
+      },
+    };
+  }
 
-  editStarMap(domStarMap, options).then((data) => res.send(data));
+  //res.setHeader("Content-Type", "image/svg+xml");
+
+  editStarMap(domStarMap, options).then((data) => res.json(data));
 });
 
 app.listen(3000, () => {

@@ -61,9 +61,9 @@ app.post("/get_classic_v1_map", async (req, res) => {
     };
   }
 
-  //res.setHeader("Content-Type", "image/svg+xml");
+  res.setHeader("Content-Type", "image/svg+xml");
 
-  editStarMap(domStarMap, options).then((data) => res.json(data));
+  editStarMap(domStarMap, options).then((data) => res.send(data));
 });
 
 app.listen(3000, () => {

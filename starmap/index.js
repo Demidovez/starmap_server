@@ -306,11 +306,9 @@ export function editStarMap(dom, options) {
       dom.window.reloadStarMap(config);
     }
 
-    //console.log(dom.window.document.querySelector("canvas").toDataURL());
+    //promiseResolve(dom.window.document.querySelector("canvas").toDataURL());
 
-    promiseResolve(dom.window.document.querySelector("canvas").toDataURL());
-
-    //dom.window.downloadSVG().then((svg) => promiseResolve(svg));
+    dom.window.downloadSVG().then((svg) => promiseResolve(svg));
   };
 
   dom.window.eval("window.initedStartMap()");

@@ -6,7 +6,7 @@ import {
 } from "./helpers/index.js";
 const app = express();
 import mongoose from "mongoose";
-import { createStarMap, editStarMap } from "./starmap/index.js";
+import { createDomStarMapClassicV1, editStarMapClassicV1 } from "./starmap/templates/classic_v1/index.js";
 
 // Соединение с БД
 mongoose.connect("mongodb://62.75.195.219:28018/starmap", {
@@ -14,9 +14,10 @@ mongoose.connect("mongodb://62.75.195.219:28018/starmap", {
   useNewUrlParser: true,
 });
 
-var domStarMap = createStarMap();
+var domStarMapClassicV1 = createDomStarMapClassicV1();
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
 
 app.get("/", (req, res) => {
   res.send("<h2>Привет Express</h2>");
@@ -49,12 +50,17 @@ app.get("/images/:category/:name", (req, res) => {
 // Создаем звездную карту
 app.post("/get_classic_v1_map", async (req, res) => {
   const background = req.body.background;
+  const rotate = req.body.rotate;
 
   var options = {};
 
+  if(rotate) {
+    options = { ...options, rotate: { center: rotate }}
+  }
+
   if (background) {
     options = {
-      rotate: { center: [52.1649, 29.1333, 0] },
+      ...options,
       config: {
         background: { fill: background },
       },
@@ -63,7 +69,7 @@ app.post("/get_classic_v1_map", async (req, res) => {
 
   res.setHeader("Content-Type", "image/svg+xml");
 
-  editStarMap(domStarMap, options).then((data) => res.send(data));
+  editStarMapClassicV1(domStarMapClassicV1, options).then((data) => res.send(data));
 });
 
 app.listen(3000, () => {

@@ -4,9 +4,9 @@ import { fileURLToPath } from "url";
 const { JSDOM } = jsdom;
 import htmlDom from "./dom.js";
 
-export function createStarMap() {
+export function createDomStarMapClassicV1() {
   const dom = new JSDOM(htmlDom, {
-    url: "file://" + path.dirname(fileURLToPath(import.meta.url)) + "/", // "file:///Users/demi/Projects/starmap_server/starmap_server/starmap/",
+    url: "file://" + path.join(path.dirname(fileURLToPath(import.meta.url)), "../../"), 
     runScripts: "dangerously",
     resources: "usable",
   });
@@ -288,7 +288,7 @@ export function createStarMap() {
   return dom;
 }
 
-export function editStarMap(dom, options) {
+export function editStarMapClassicV1(dom, options) {
   const { rotate, config } = options;
 
   var promiseResolve;

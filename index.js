@@ -4,9 +4,13 @@ import {
   getAllTemplates,
   getControllersByTemplate,
 } from "./helpers/index.js";
-const app = express();
 import mongoose from "mongoose";
-import { createDomStarMapClassicV1, editStarMapClassicV1 } from "./starmap/templates/classic_v1/index.js";
+import {
+  createDomStarMapClassicV1,
+  editStarMapClassicV1,
+} from "./starmap/templates/classic_v1/index.js";
+
+const app = express();
 
 // Соединение с БД
 mongoose.connect("mongodb://62.75.195.219:28018/starmap", {
@@ -14,10 +18,12 @@ mongoose.connect("mongodb://62.75.195.219:28018/starmap", {
   useNewUrlParser: true,
 });
 
-var domStarMapClassicV1 = createDomStarMapClassicV1();
+var initialListClassicV1 = Array.from({ length: 100 }, () =>
+  createDomStarMapClassicV1()
+);
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json())
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("<h2>Привет Express</h2>");
@@ -48,14 +54,14 @@ app.get("/images/:category/:name", (req, res) => {
 });
 
 // Создаем звездную карту
-app.post("/get_classic_v1_map", async (req, res) => {
+app.post("/get_classic_v1_map", (req, res) => {
   const background = req.body.background;
   const rotate = req.body.rotate;
 
   var options = {};
 
-  if(rotate) {
-    options = { ...options, rotate: { center: rotate }}
+  if (rotate) {
+    options = { ...options, rotate: { center: rotate } };
   }
 
   if (background) {
@@ -69,7 +75,12 @@ app.post("/get_classic_v1_map", async (req, res) => {
 
   res.setHeader("Content-Type", "image/svg+xml");
 
-  editStarMapClassicV1(domStarMapClassicV1, options).then((data) => res.send(data));
+  editStarMapClassicV1(initialListClassicV1.shift(), options).then((data) => {
+    res.send(data);
+
+    //initialListClassicV1.push(createDomStarMapClassicV1());
+    console.log(initialListClassicV1.length);
+  });
 });
 
 app.listen(3000, () => {

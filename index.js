@@ -18,9 +18,7 @@ mongoose.connect("mongodb://62.75.195.219:28018/starmap", {
   useNewUrlParser: true,
 });
 
-var initialListClassicV1 = Array.from({ length: 100 }, () =>
-  createDomStarMapClassicV1()
-);
+var domClassicV1 = createDomStarMapClassicV1()
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -75,11 +73,8 @@ app.post("/get_classic_v1_map", (req, res) => {
 
   res.setHeader("Content-Type", "image/svg+xml");
 
-  editStarMapClassicV1(initialListClassicV1.shift(), options).then((data) => {
+  editStarMapClassicV1(domClassicV1, options).then((data) => {
     res.send(data);
-
-    //initialListClassicV1.push(createDomStarMapClassicV1());
-    console.log(initialListClassicV1.length);
   });
 });
 

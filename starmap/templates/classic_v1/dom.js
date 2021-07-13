@@ -72,7 +72,7 @@ export default `<!DOCTYPE html>
           baseline: "bottom",
         },
         propernameLimit: 1.5, // Show proper names for stars brighter than propernameLimit
-        size: 7, // Maximum size (radius) of star circle in pixels
+        size: 14, // Maximum size (radius) of star circle in pixels
         exponent: -0.28, // Scale exponent for star size, larger = more linear
         data: "stars.6.json", // Data source for stellar data,
         // number indicates limit magnitude
@@ -99,47 +99,22 @@ export default `<!DOCTYPE html>
         symbols: {
           //DSO symbol styles, 'stroke'-parameter present = outline
           gg: { shape: "circle", fill: "#ff0000" }, // Galaxy cluster
-          g: { shape: "ellipse", fill: "#ff0000" }, // Generic galaxy
-          s: { shape: "ellipse", fill: "#ff0000" }, // Spiral galaxy
-          s0: { shape: "ellipse", fill: "#ff0000" }, // Lenticular galaxy
-          sd: { shape: "ellipse", fill: "#ff0000" }, // Dwarf galaxy
-          e: { shape: "ellipse", fill: "#ff0000" }, // Elliptical galaxy
-          i: { shape: "ellipse", fill: "#ff0000" }, // Irregular galaxy
-          oc: {
-            shape: "circle",
-            fill: "#ffcc00",
-            stroke: "#ffcc00",
-            width: 1.5,
-          }, // Open cluster
+          g: { shape: "circle", fill: "#ff0000" }, // Generic galaxy
+          s: { shape: "circle", fill: "#ff0000" }, // Spiral galaxy
+          s0: { shape: "circle", fill: "#ff0000" }, // Lenticular galaxy
+          sd: { shape: "circle", fill: "#ff0000" }, // Dwarf galaxy
+          e: { shape: "circle", fill: "#ff0000" }, // Elliptical galaxy
+          i: { shape: "circle", fill: "#ff0000" }, // Irregular galaxy
+          oc: { shape: "circle", fill: "#ffcc00" }, // Open cluster
           gc: { shape: "circle", fill: "#ff9900" }, // Globular cluster
-          en: { shape: "square", fill: "#ff00cc" }, // Emission nebula
-          bn: {
-            shape: "square",
-            fill: "#ff00cc",
-            stroke: "#ff00cc",
-            width: 2,
-          }, // Generic bright nebula
-          sfr: {
-            shape: "square",
-            fill: "#cc00ff",
-            stroke: "#cc00ff",
-            width: 2,
-          }, // Star forming region
-          rn: { shape: "square", fill: "#00ooff" }, // Reflection nebula
-          pn: { shape: "diamond", fill: "#00cccc" }, // Planetary nebula
-          snr: { shape: "diamond", fill: "#ff00cc" }, // Supernova remnant
-          dn: {
-            shape: "square",
-            fill: "#999999",
-            stroke: "#999999",
-            width: 2,
-          }, // Dark nebula grey
-          pos: {
-            shape: "marker",
-            fill: "#cccccc",
-            stroke: "#cccccc",
-            width: 1.5,
-          }, // Generic marker
+          en: { shape: "circle", fill: "#ff00cc" }, // Emission nebula
+          bn: { shape: "circle", fill: "#ff00cc" }, // Generic bright nebula
+          sfr: { shape: "circle", fill: "#cc00ff" }, // Star forming region
+          rn: { shape: "circle", fill: "#00ooff" }, // Reflection nebula
+          pn: { shape: "circle", fill: "#00cccc" }, // Planetary nebula
+          snr: { shape: "circle", fill: "#ff00cc" }, // Supernova remnant
+          dn: { shape: "circle", fill: "#999999" }, // Dark nebula grey
+          pos: { shape: "circle", fill: "#cccccc" }, // Generic marker
         },
       },
       planets: {

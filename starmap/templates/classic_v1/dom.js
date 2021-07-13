@@ -364,8 +364,6 @@ export default `<!DOCTYPE html>
     </script>
 
     <script>
-        window.downloadSVG = () => { return Celestial.exportSVG()};
-
         window.rotateStarMap = (rotate) => { Celestial.rotate(rotate) }; 
         window.reloadStarMap = (config) => { Celestial.reload(config) }; 
     </script>

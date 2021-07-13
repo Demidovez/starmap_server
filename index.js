@@ -71,10 +71,15 @@ app.post("/get_classic_v1_map", (req, res) => {
     };
   }
 
-  res.setHeader("Content-Type", "image/svg+xml");
-
   editStarMapClassicV1(domClassicV1, options).then((data) => {
-    res.send(data);
+    const img = Buffer.from(data.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+
+    res.writeHead(200, {
+      'Content-Type': 'image/png',
+      'Content-Length': img.length
+    });
+
+    res.end(img); 
   });
 });
 

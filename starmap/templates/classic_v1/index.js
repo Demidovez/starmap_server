@@ -22,7 +22,7 @@ export function editStarMapClassicV1(dom, options) {
   var promiseResolve;
 
   const promise = new Promise((resolve, _) => {
-    promiseResolve = (svg) => resolve(svg);
+    promiseResolve = (png) => resolve(png);
   });
 
   dom.window.initedStartMap = () => {
@@ -34,7 +34,7 @@ export function editStarMapClassicV1(dom, options) {
       dom.window.reloadStarMap(config);
     }
 
-    dom.window.downloadSVG().then((svg) => promiseResolve(svg));
+    promiseResolve(dom.window.document.querySelector("canvas").toDataURL("image/png"));
   };
 
   dom.window.eval("window.initedStartMap()");

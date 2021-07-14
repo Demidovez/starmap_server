@@ -16,8 +16,8 @@ export function createDomStarMapClassicV1() {
   return dom;
 }
 
-export function editStarMapClassicV1(dom, options) {
-  const { rotate, config } = options;
+export function editStarMapClassicV1(dom, config) {
+  const { rotate, widthMap, options } = config;
 
   var promiseResolve;
 
@@ -30,8 +30,12 @@ export function editStarMapClassicV1(dom, options) {
       dom.window.rotateStarMap(rotate);
     }
 
-    if (config) {
-      dom.window.reloadStarMap(config);
+    if (widthMap) {
+      dom.window.resizeStarMap(widthMap);
+    }
+
+    if (options) {
+      dom.window.reloadStarMap(options);
     }
 
     promiseResolve(dom.window.document.querySelector("canvas").toDataURL("image/png"));

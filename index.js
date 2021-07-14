@@ -53,25 +53,28 @@ app.get("/images/:category/:name", (req, res) => {
 
 // Создаем звездную карту
 app.post("/get_classic_v1_map", (req, res) => {
-  const background = req.body.background;
   const rotate = req.body.rotate;
+  const widthMap = req.body.width;
+  const options = req.body.options;
 
-  var options = {};
+  var config = {};
 
   if (rotate) {
-    options = { ...options, rotate: { center: rotate } };
+    config = { ...config, rotate: { center: rotate } };
   }
 
-  if (background) {
-    options = {
-      ...options,
-      config: {
-        background: { fill: background },
-      },
+  if (widthMap) {
+    config = { ...config, widthMap }
+  }
+
+  if (options) {
+    config = {
+      ...config,
+      options
     };
   }
 
-  editStarMapClassicV1(domClassicV1, options).then((data) => {
+  editStarMapClassicV1(domClassicV1, config).then((data) => {
     const img = Buffer.from(data.replace(/^data:image\/\w+;base64,/, ""), 'base64');
 
     res.writeHead(200, {

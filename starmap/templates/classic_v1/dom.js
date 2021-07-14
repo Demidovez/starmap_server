@@ -339,8 +339,9 @@ export default `<!DOCTYPE html>
     </script>
 
     <script>
-        window.rotateStarMap = (rotate) => { Celestial.rotate(rotate) }; 
-        window.reloadStarMap = (config) => { Celestial.reload(config) }; 
+        window.rotateStarMap     = (rotate) => { Celestial.rotate(rotate) }; 
+        window.resizeStarMap     = (width)  => { Celestial.resize({ width }) }; 
+        window.reloadStarMap     = (config) => { Celestial.apply(config) };
     </script>
 </body>
 </html>`;

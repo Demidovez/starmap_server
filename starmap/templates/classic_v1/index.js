@@ -17,7 +17,7 @@ export function createDomStarMapClassicV1() {
 }
 
 export function editStarMapClassicV1(dom, config) {
-  const { rotate, widthMap, options } = config;
+  const { date, location, width, options } = config;
 
   var promiseResolve;
 
@@ -26,19 +26,15 @@ export function editStarMapClassicV1(dom, config) {
   });
 
   dom.window.initedStartMap = () => {
-    if (rotate) {
-      dom.window.rotateStarMap(rotate);
-    }
+    dom.window.rotateStarMap(date, location);
+    dom.window.resizeStarMap(width);
+    dom.window.reloadStarMap(options);
 
-    if (widthMap) {
-      dom.window.resizeStarMap(widthMap);
-    }
-
-    if (options) {
-      dom.window.reloadStarMap(options);
-    }
-
-    promiseResolve(dom.window.document.querySelector("canvas").toDataURL("image/png"));
+    dom.window.callbackDraw = () => {
+      promiseResolve(
+        dom.window.document.querySelector("canvas").toDataURL("image/png")
+      );
+    };
   };
 
   dom.window.eval("window.initedStartMap()");

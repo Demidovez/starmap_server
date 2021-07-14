@@ -18,7 +18,7 @@ mongoose.connect("mongodb://62.75.195.219:28018/starmap", {
   useNewUrlParser: true,
 });
 
-var domClassicV1 = createDomStarMapClassicV1()
+var domClassicV1 = createDomStarMapClassicV1();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -53,36 +53,30 @@ app.get("/images/:category/:name", (req, res) => {
 
 // Создаем звездную карту
 app.post("/get_classic_v1_map", (req, res) => {
-  const rotate = req.body.rotate;
-  const widthMap = req.body.width;
+  const date = req.body.date;
+  const location = req.body.location;
+  const width = req.body.width;
   const options = req.body.options;
 
-  var config = {};
-
-  if (rotate) {
-    config = { ...config, rotate: { center: rotate } };
-  }
-
-  if (widthMap) {
-    config = { ...config, widthMap }
-  }
-
-  if (options) {
-    config = {
-      ...config,
-      options
-    };
-  }
+  var config = {
+    date: date ? new Date(date) : new Date(),
+    location,
+    width,
+    options,
+  };
 
   editStarMapClassicV1(domClassicV1, config).then((data) => {
-    const img = Buffer.from(data.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+    const img = Buffer.from(
+      data.replace(/^data:image\/\w+;base64,/, ""),
+      "base64"
+    );
 
     res.writeHead(200, {
-      'Content-Type': 'image/png',
-      'Content-Length': img.length
+      "Content-Type": "image/png",
+      "Content-Length": img.length,
     });
 
-    res.end(img); 
+    res.end(img);
   });
 });
 

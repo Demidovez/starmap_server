@@ -2527,7 +2527,7 @@
     orthographic: {
       n: "Orthographic",
       arg: null,
-      scale: 510,
+      scale: 511,
       ratio: 1.0,
       clip: true,
     },

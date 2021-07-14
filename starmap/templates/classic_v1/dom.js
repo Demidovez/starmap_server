@@ -6,6 +6,9 @@ export default `<!DOCTYPE html>
     <script src="lib/d3.min.js"></script>
     <script type="text/javascript" src="lib/d3.geo.projection.min.js"></script>
     <script type="text/javascript" src="celestial.js"></script>
+    <style>
+    
+    </style>
 </head>
 <body>
     <div style="overflow: hidden; margin: 0 auto">
@@ -201,6 +204,7 @@ export default `<!DOCTYPE html>
         graticule: {
           show: true,
           stroke: "#cccccc",
+          dash: [],
           width: 0.6,
           opacity: 0.8,
           // grid values: "outline", "center", or [lat,...] specific position
@@ -336,12 +340,18 @@ export default `<!DOCTYPE html>
       });
   
       Celestial.display(config);
+
+
+      Celestial.addCallback(() => {
+        window.callbackDraw()
+      });
     </script>
 
     <script>
-        window.rotateStarMap     = (rotate) => { Celestial.rotate(rotate) }; 
+        window.rotateStarMap     = (date, location) => { Celestial.skyview({date, location}) }; 
         window.resizeStarMap     = (width)  => { Celestial.resize({ width }) }; 
         window.reloadStarMap     = (config) => { Celestial.apply(config) };
+        window.callbackDraw      = () => {}
     </script>
 </body>
 </html>`;

@@ -59,7 +59,7 @@ app.post("/get_classic_v1_map", (req, res) => {
   const options = req.body.options;
 
   var config = {
-    date: date ? new Date(date) : new Date(),
+    date,
     location,
     width,
     options,

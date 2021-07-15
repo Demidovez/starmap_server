@@ -255,9 +255,16 @@ export default `<!DOCTYPE html>
     </script>
 
     <script>
-        window.rotateStarMap     = (date, location) => { Celestial.skyview({date, location}) }; 
+        window.rotateStarMap     = (date, location) => { 
+          Celestial.skyview({
+            date: date ? new Date(date) : new Date(), 
+            location
+          }) 
+        }; 
+
         window.resizeStarMap     = (width)  => { Celestial.resize({ width }) }; 
         window.reloadStarMap     = (config) => { Celestial.apply(config) };
+        
         window.callbackDraw      = () => {}
     </script>
 </body>

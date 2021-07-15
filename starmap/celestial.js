@@ -3051,7 +3051,7 @@ canvas.text = function () {
     return typeof o == "function" || false;
   }
   function isValidDate(d) {
-    return d && d instanceof Date && !isNaN(d);
+    return d && d instanceof Date;
   }
   function fileExists(url) {
     var http = new XMLHttpRequest();
@@ -5145,6 +5145,7 @@ canvas.text = function () {
         timeZone = cfg.timezone;
         valid = true;
       }
+
       if (has(cfg, "date") && isValidDate(cfg.date)) {
         date.setTime(cfg.date.valueOf());
         $form("datetime").value = dateFormat(cfg.date, timeZone);

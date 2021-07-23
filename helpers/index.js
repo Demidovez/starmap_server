@@ -24,6 +24,20 @@ export function getImageFromAssets(res, category, name) {
   });
 }
 
+export function getDataFromAssets(res, name) {
+  let directory_name = "assets/data/" + name;
+
+  fs.readFile(directory_name, (err, content) => {
+    if (err) {
+      res.writeHead(400, { "Content-type": "text/html" });
+      res.end("No such file");
+    } else {
+      res.writeHead(200);
+      res.end(content);
+    }
+  });
+}
+
 export async function getAllTemplates() {
   const templates = await Template.find({}, (err, templates) => {
     if (err) return [];

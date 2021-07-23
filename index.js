@@ -1,6 +1,7 @@
 import express from "express";
 import {
   getImageFromAssets,
+  getDataFromAssets,
   getAllTemplates,
   getControllersByTemplate,
 } from "./helpers/index.js";
@@ -49,6 +50,13 @@ app.get("/images/:category/:name", (req, res) => {
   const name = req.params.name;
 
   getImageFromAssets(res, category, name);
+});
+
+// Достаем исходные данные для карты
+app.get("/data/:name", (req, res) => {
+  const name = req.params.name;
+
+  getDataFromAssets(res, name);
 });
 
 // Создаем звездную карту
